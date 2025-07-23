@@ -1,5 +1,5 @@
 {
-  "title": "RFP: R RFP: Re e equest f quest f quest fo o or Pr r Pr r Proposal oposal RFP: R RFP: R e quest f o r Pr oposal",
+  "title": "RFP: RP: Reuest quest quest fo Pr Proposal oposal RFP: RP: quest Pr oposal",
   "outline": [
     {
       "level": "H1",
@@ -23,7 +23,27 @@
     },
     {
       "level": "H3",
+      "text": "Background",
+      "page": 2
+    },
+    {
+      "level": "H3",
       "text": "Equitable access for all Ontarians:",
+      "page": 3
+    },
+    {
+      "level": "H3",
+      "text": "Shared decision-making and accountability:",
+      "page": 3
+    },
+    {
+      "level": "H3",
+      "text": "Shared governance structure:",
+      "page": 3
+    },
+    {
+      "level": "H3",
+      "text": "Shared funding:",
       "page": 3
     },
     {
@@ -58,17 +78,37 @@
     },
     {
       "level": "H3",
-      "text": "indicate how this consultative process will be approached. The business plan for the ODL must address significant issues. There are, for example,",
+      "text": "The Business Plan to be Developed",
+      "page": 5
+    },
+    {
+      "level": "H3",
+      "text": "indicate how this consultative process will be approached.",
       "page": 6
     },
     {
       "level": "H3",
-      "text": "1) A preliminary report will be issued during June 2003. 2) It is expected that an Interim Report, suitable for distribution to the broader library",
+      "text": "Milestones",
       "page": 6
     },
     {
       "level": "H3",
-      "text": "no later than September 30, 2003. Approach and Specific Proposal Requirements",
+      "text": "1) A preliminary report will be issued during June 2003.",
+      "page": 6
+    },
+    {
+      "level": "H3",
+      "text": "for responses to be evaluated.",
+      "page": 6
+    },
+    {
+      "level": "H3",
+      "text": "3) The business plan must be completed and approved by the ODL Steering Committee no later than September 30, 2003.",
+      "page": 6
+    },
+    {
+      "level": "H3",
+      "text": "Approach and Specific Proposal Requirements",
       "page": 6
     },
     {
@@ -97,6 +137,11 @@
       "page": 9
     },
     {
+      "level": "H4",
+      "text": "5.00 per citizen.",
+      "page": 9
+    },
+    {
       "level": "H3",
       "text": "Appendix B: ODL Steering Committee Terms of Reference",
       "page": 10
@@ -104,6 +149,11 @@
     {
       "level": "H4",
       "text": "2.1 developing a detailed business plan for the three-year implementation phase of the ODL, including governance, management, funding model and structure, organizational structure, marketing,",
+      "page": 10
+    },
+    {
+      "level": "H4",
+      "text": "2.2 consulting with and reporting to stakeholder communities, to ensure open, consistent and two-way",
       "page": 10
     },
     {
@@ -138,7 +188,7 @@
     },
     {
       "level": "H4",
-      "text": "2.9 undertaking advocacy efforts to promote the ODL to the broader communities including library and education communities. 3. Membership",
+      "text": "2.9 undertaking advocacy efforts to promote the ODL to the broader communities including library and education communities.",
       "page": 10
     },
     {
@@ -168,7 +218,22 @@
     },
     {
       "level": "H4",
-      "text": "4.1 Groups and organizations named in Section 3 above are responsible for appointing up to two representatives to the Steering Committee. 4.2",
+      "text": "3.6 It is anticipated that as planning for the ODL evolves, the Steering Committee may, at its discretion, call on invited experts to advise on issues as required.",
+      "page": 11
+    },
+    {
+      "level": "H4",
+      "text": "4.1 Groups and organizations named in Section 3 above are responsible for appointing up to two representatives to the Steering Committee.",
+      "page": 11
+    },
+    {
+      "level": "H4",
+      "text": "4.2 Desired characteristics for steering committee appointees include:",
+      "page": 11
+    },
+    {
+      "level": "H3",
+      "text": "• Able to devote time to Steering Committee business: approximately one day per month for .",
       "page": 11
     },
     {
