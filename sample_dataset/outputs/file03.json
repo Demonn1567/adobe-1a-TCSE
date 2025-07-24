@@ -1,5 +1,5 @@
 {
-  "title": "RFP: RP: Reuest quest quest fo Pr Proposal oposal RFP: RP: quest Pr oposal",
+  "title": "",
   "outline": [
     {
       "level": "H1",
@@ -53,12 +53,12 @@
     },
     {
       "level": "H3",
-      "text": "Access: to the “deep” web (i.e. Commercial, purchased electronic services)",
+      "text": "Access:",
       "page": 4
     },
     {
       "level": "H3",
-      "text": "Guidance and Advice: to support e-learning",
+      "text": "Guidance and Advice:",
       "page": 4
     },
     {
@@ -68,12 +68,12 @@
     },
     {
       "level": "H3",
-      "text": "Provincial Purchasing & Licensing: of electronic content on a consortia basis for all member libraries",
+      "text": "Provincial Purchasing & Licensing:",
       "page": 4
     },
     {
       "level": "H3",
-      "text": "Technological Support: of common standards for the preservation and archiving local digital content",
+      "text": "Technological Support:",
       "page": 4
     },
     {
@@ -93,17 +93,7 @@
     },
     {
       "level": "H3",
-      "text": "1) A preliminary report will be issued during June 2003.",
-      "page": 6
-    },
-    {
-      "level": "H3",
       "text": "for responses to be evaluated.",
-      "page": 6
-    },
-    {
-      "level": "H3",
-      "text": "3) The business plan must be completed and approved by the ODL Steering Committee no later than September 30, 2003.",
       "page": 6
     },
     {
@@ -118,22 +108,12 @@
     },
     {
       "level": "H3",
-      "text": "Appendix A:  ODL Envisioned Phases & Funding",
+      "text": "Appendix A:",
       "page": 8
     },
     {
       "level": "H3",
       "text": "Funding Source",
-      "page": 9
-    },
-    {
-      "level": "H3",
-      "text": "2007",
-      "page": 9
-    },
-    {
-      "level": "H3",
-      "text": "2017",
       "page": 9
     },
     {
@@ -143,7 +123,7 @@
     },
     {
       "level": "H3",
-      "text": "Appendix B: ODL Steering Committee Terms of Reference",
+      "text": "Appendix B:",
       "page": 10
     },
     {
@@ -193,27 +173,27 @@
     },
     {
       "level": "H4",
-      "text": "3.1 Schools: - Ontario School Library Association (OSLA) and The Association of Library Consultants and",
+      "text": "3.1 Schools:",
       "page": 10
     },
     {
       "level": "H4",
-      "text": "3.2 Universities: - Ontario Council of University Libraries (OCUL) ( ) OCUL to name",
+      "text": "3.2 Universities:",
       "page": 10
     },
     {
       "level": "H4",
-      "text": "3.3 Colleges: - Bibliocentre, and Heads of Libraries and Learning Resources (UAG and HLLR ) to name",
+      "text": "3.3 Colleges:",
       "page": 10
     },
     {
       "level": "H4",
-      "text": "3.4 Public libraries: - Administrators of Medium-sized Public Libraries of Ontario (AMPLO), Administrators of Rural",
+      "text": "3.4 Public libraries:",
       "page": 10
     },
     {
       "level": "H4",
-      "text": "3.5 Ontario Library Association representative (ex-officio)  ( ) OLA to appoint one representative - Role of the OLA ex-officio member: To act as a liaison between the steering committee and",
+      "text": "3.5 Ontario Library Association representative (ex-officio)  ( ) OLA to appoint one representative - Role of the OLA ex-officio member:",
       "page": 11
     },
     {
@@ -229,11 +209,6 @@
     {
       "level": "H4",
       "text": "4.2 Desired characteristics for steering committee appointees include:",
-      "page": 11
-    },
-    {
-      "level": "H3",
-      "text": "• Able to devote time to Steering Committee business: approximately one day per month for .",
       "page": 11
     },
     {
@@ -263,12 +238,12 @@
     },
     {
       "level": "H4",
-      "text": "9.3 Conflict of Interest: The ODL Steering Committee will function according to standard conflict of interest guidelines",
+      "text": "9.3 Conflict of Interest:",
       "page": 12
     },
     {
       "level": "H3",
-      "text": "Appendix C: ODL’s Envisioned Electronic Resources",
+      "text": "Appendix C:",
       "page": 13
     }
   ]

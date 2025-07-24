@@ -1,0 +1,27 @@
+ 1  11.7   106  Application form for grant of LTC advance
+ 1   9.7   133  Name of the Government Servant 1.
+ 1   9.7   151  Designation 2.
+ 1   9.7   169  Date of entering the Central Government 3.
+ 1   9.7   187  Service
+ 1   9.7   205  PAY + SI + NPA 4.
+ 1   9.7   223  Whether permanent or temporary 5.
+ 1   9.7   241  6. Home Town as recorded in the Service Book Whether wife / husband is employed and if
+ 1   9.7   265  7. so whether entitled to LTC
+ 1   9.7   289  Whether the concession is to be availed for
+ 1   9.7   307  visiting home town and if so block for which 8.
+ 1   9.7   324  LTC is to be availed.
+ 1   9.7   342  (a) If the concession is to visit anywhere in
+ 1   9.7   360  India, the place to be visited. 9.
+ 1   9.7   377  (b) Block for which to be availed.
+ 1   9.7   396  Single rail fare/bus fare from the
+ 1   9.7   413  headquarters to home town/place of visit by 10.
+ 1   9.7   431  shortest route.
+ 1   9.7   449  Persons in respect of whom LTC is proposed to be availed. S.No Name Age Relationship
+ 1   9.7   476  1. 2.
+ 1   9.7   499  11. 3. 4.
+ 1   9.7   529  5. 6.
+ 1   9.7   561  Amount of advance required.
+ 1   9.7   561  Rs. 12.
+ 1   9.7   597  I declare that the particulars furnished above are true and correct to the best of my knowledge.  I undertake to produce the tickets for the outward journey within ten days of receipt of the advance.
+ 1   9.7   632  In the event of cancellation of the journey or if I fail to produce the tickets within ten days of receipt of advance, I undertake to refund the entire advance in one lump sum.
+ 1   9.7   679  Date Signature of Government Servant.

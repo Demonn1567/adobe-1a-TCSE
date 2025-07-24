@@ -1,9 +1,12 @@
 """
-features.py – filter noisy spans & build numeric feature matrix
+features.py – prune noisy spans & build numeric feature matrix
 """
 from __future__ import annotations
-import re, numpy as np
+import re
 from typing import List
+
+import numpy as np
+
 from .utils import (
     norm,
     build_header_footer_stopset,
@@ -12,52 +15,69 @@ from .utils import (
 )
 from .extract import Span
 
-NUM_ONLY_RE     = re.compile(r"^\d+\.$")              # bare "3."
-SECTION_RE_ANY  = re.compile(r"\b\d+(\.\d+)+\s")      # "2.1 " anywhere
+# --------------------------------------------------------------------------- #
+NUM_ONLY_RE     = re.compile(r"^\d+(\.\d+)?$")        # 2007, 3, 3.0
+LEAD_NUM_BULLET = re.compile(r"^\s*\d+\)")            # "1)"
+SECTION_ANY_RE  = re.compile(r"\b\d+(\.\d+)+\s")      # 2.3
+
+
+def _shorten_after_colon(txt: str) -> str:
+    """Long descriptive lines → keep the part before first ':'."""
+    if ":" in txt and len(txt.split()) > 5:
+        return txt.split(":", 1)[0] + ":"
+    return txt
+
 
 # --------------------------------------------------------------------------- #
 def filter_spans(spans: List[Span], title: str, page_cnt: int) -> List[Span]:
-    """Return spans worth sending to heading classifier."""
+    """Return spans worth sending to the heading classifier."""
     stop    = build_header_footer_stopset([norm(s.text) for s in spans], page_cnt)
     title_n = norm(title)
-    clean: List[Span] = []
+    kept: List[Span] = []
 
     for s in spans:
-        txt, txt_n = s.text, norm(s.text)
+        txt, n = s.text, norm(s.text)
 
-        # quick rejects
+        # ----- obvious skips ------------------------------------------------ #
         if (
-            s.page == 1
-            or txt_n == title_n
-            or txt_n in stop
+            (page_cnt > 1 and s.page == 1)      # keep p 1 if a single‑pager
+            or n == title_n
+            or n in stop
             or looks_like_date(txt)
             or looks_like_dot_leader(txt)
             or NUM_ONLY_RE.fullmatch(txt.strip())
+            or LEAD_NUM_BULLET.match(txt)
         ):
             continue
 
-        # keep numbered headings even if embedded in bigger span
-        m = SECTION_RE_ANY.search(txt)
+        # ---------- numbered headings (keep, maybe split) ------------------ #
+        m = SECTION_ANY_RE.search(txt)
         if m:
-            if m.start():                # split tail containing the heading
+            if m.start():
                 from copy import copy
-                tail       = copy(s)
-                tail.text  = txt[m.start():].lstrip()
-                clean.append(tail)
+                tail      = copy(s)
+                tail.text = _shorten_after_colon(txt[m.start():].lstrip())
+                kept.append(tail)
             else:
-                clean.append(s)
+                s.text = _shorten_after_colon(txt)
+                kept.append(s)
             continue
 
-        # ditch long sentences or bullets that clearly aren’t headings
-        words = txt.split()
-        if len(words) > 25 or (txt.rstrip(".").endswith(".") and len(words) > 10):
-            continue
-        if sum(c.isupper() for c in txt) / len(txt) > 0.9:
+        # ---------- heuristics for plain‑text headings --------------------- #
+        tokens = txt.split()
+
+        # full sentences → body
+        if txt.strip().endswith(".") and len(tokens) > 8:
             continue
 
-        clean.append(s)
+        # unguided blobs longer than 18 words are rarely headings
+        if len(tokens) > 18:
+            continue
 
-    return clean
+        s.text = _shorten_after_colon(txt)
+        kept.append(s)
+
+    return kept
 
 
 # --------------------------------------------------------------------------- #
@@ -70,16 +90,9 @@ def build_matrix(spans: List[Span]) -> np.ndarray:
         y_pct = s.bbox[1] / 792.0
         caps  = sum(c.isupper() for c in s.text) / len(s.text)
         first = s.text.lstrip()[:8].split(" ")[0]
-        num_prefix = 1 if first.rstrip(".").replace(".", "").isdigit() else 0
+        num   = 1 if first.rstrip(".").replace(".", "").isdigit() else 0
         feats.append(
-            [
-                s.font_size,
-                int(s.is_bold),
-                int(s.is_italic),
-                y_pct,
-                caps,
-                num_prefix,
-            ]
+            [s.font_size, int(s.is_bold), int(s.is_italic), y_pct, caps, num]
         )
 
     X = np.asarray(feats, np.float32)
