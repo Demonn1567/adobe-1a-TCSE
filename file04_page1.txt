@@ -1,0 +1,27 @@
+ 1  28.0    37  Parsippany -Troy Hills STEM Pathways
+ 1  14.0    89  Mission Statement:
+ 1  12.0    93  To provide PTHSD high school students with the opportunity to concentrate their studies, beyond those required in high school, in the areas of science,
+ 1  12.0   123  technology, engineering, and mathematics, and expose students to relevant real world experiences through project work, conferences and presentations to enhance their high school
+ 1  12.0   152  experience.
+ 1  14.0   183  Goals:
+ 1  11.5   209  • Inspire keen interest in mathematics, science, engineering, and technology, develop strong scholarship in the subject and
+ 1  11.5   238  promote the enjoyment of these studies in high school. • Expose students to potential career opportunities in the field.
+ 1  11.5   264  • Encourage students to pursue higher education and major in STEM careers.
+ 1  11.5   292  • Promote interactions with STEM professionals to learn about future opportunities.
+ 1  11.5   319  • Support field experiences connected to the world outside of the school building.
+ 1  11.5   346  • Signal to employers, universities, training programs, and military that a student has completed a comprehensive course
+ 1  11.5   373  of study in a specialized area. • Cultivate transferable work habits such as perseverance, goal
+ 1  11.5   400  setting, and self-direction.
+ 1  15.3   438  PATHWAY OPTIONS
+ 1  15.3   468  REGULAR PATHWAY
+ 1  15.3   468  DISTINCTION PATHWAY
+ 1  11.0   483  ● 4 credits of Math - At least one math course should be an AP Math class. ● 4 credits of Math
+ 1  11.0   510  ● 4 credits of Science- At least one ● 4 credits of Science science course should be an AP ● 4 credits of STEM-designated electives
+ 1  11.0   537  Science class. ● Maintain an overall 2.85 GPA ● 4 credits of STEM-designated electives ● Participate in a minimum of 3 STEM
+ 1  11.0   564  - One must be a Computer presentations/conferences each year Science/Technology Class with a required minimum total of 12
+ 1  11.0   591  ● Maintain an overall 3.5 GPA presentations/conferences throughout ● Participate in a minimum of 3 STEM . * the 4 years
+ 1  11.0   618  presentations/conferences a year with a ● Join and actively participate in a required minimum total of 12 STEM-related extracurricular activity or
+ 1  11.0   645  presentations/conferences throughout club every year of attendance. - the 4 years.
+ 1  11.0   672  ● Join and actively participate in a STEM-related extracurricular activity or
+ 1  11.0   699  club every year of attendance. ● Either participate in an internship or
+ 1  11.0   726  design and implement a community impact project.

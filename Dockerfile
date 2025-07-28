@@ -25,7 +25,7 @@ RUN pip install --no-cache-dir -r /app/requirements.txt
 # We don't need PDFs or local outputs inside the image,
 # but we DO need the schema used by json validation.
 COPY src /app/src
-COPY sample_dataset/schema /app/sample_dataset/schema
+COPY schema /app/sample_dataset/schema
 
 # Default run: process /app/input -> /app/output
 CMD ["python", "-m", "src.runner"]
