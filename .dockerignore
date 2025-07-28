@@ -1,0 +1,19 @@
+# keep the build context small
+.vscode/
+.idea/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.DS_Store
+
+# local data / artifacts
+input/
+output/
+sample_dataset/pdfs/
+sample_dataset/outputs/
+
+# git
+.git
+.gitignore

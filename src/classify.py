@@ -11,15 +11,12 @@ from sklearn.cluster import KMeans
 from .extract import Span
 from .features import build_matrix
 
-# --------------------------------------------------------------------------- #
 MODEL_COEF = np.array([2.1, 1.3, 0.4, -0.5, 1.7, 2.4], dtype=np.float32)
 MODEL_INT  = -2.0
 
 SECTION_ANY = re.compile(r"\b\d+(\.\d+)+\s")   # “2.1 ” anywhere
 
-
 def predict_headings(spans: List[Span]) -> List[Span]:
-    """Return spans labelled with .level (H1…H6)."""
     if not spans:
         return []
 
@@ -30,34 +27,35 @@ def predict_headings(spans: List[Span]) -> List[Span]:
 
     cand = [s for s, k in zip(spans, keep_ml) if k]
 
-    # -------- force‑include any span containing a numbered section -------- #
+    # force‑include any span containing a numbered section
     for s, k in zip(spans, keep_ml):
         if not k and SECTION_ANY.search(s.text):
             cand.append(s)
-    # ---------------------------------------------------------------------- #
 
     if not cand:
         return []
 
-    sizes  = np.array([s.font_size for s in cand]).reshape(-1, 1)
-    k      = min(4, np.unique(sizes).size)
-    labels = KMeans(n_clusters=k, n_init="auto", random_state=0).fit_predict(sizes)
+    # Cluster by raw font sizes
+    fs     = np.array([float(s.font_size) for s in cand]).reshape(-1, 1)
+    k      = min(4, np.unique(fs).size)
+    labels = KMeans(n_clusters=k, n_init="auto", random_state=0).fit_predict(fs)
 
-    means = [-sizes[labels == i].mean() for i in range(k)]
-    order = np.argsort(means)
+    # Use raw means (pt). Anything within ~12% OR <=1.2pt of max is H1.
+    mu     = [float(fs[labels == i].mean()) for i in range(k)]
+    max_mu = max(mu)
 
-    level_map: dict[int, str] = {}
-    h1_mean = None
-    for idx, cl in enumerate(order):
-        if idx == 0:
-            h1_mean = means[cl]
-        if abs(means[cl] - h1_mean) < 0.2:
-            level_map[cl] = "H1"
+    level_map = {}
+    for i in range(k):
+        if (mu[i] >= 0.88 * max_mu) or (abs(mu[i] - max_mu) <= 1.2):
+            level_map[i] = "H1"
         else:
-            level_map[cl] = f"H{idx + 1}"
+            # order remaining by descending size
+            rank = 2 + sum(m > mu[i] for m in mu if m < 0.88 * max_mu)
+            level_map[i] = f"H{min(rank, 6)}"
 
     for s, lab in zip(cand, labels):
-        s.level = level_map[lab]
+        if getattr(s, "level", None) is None:
+            s.level = level_map[lab]
 
     # dotted‑number fallback
     for s in cand:
