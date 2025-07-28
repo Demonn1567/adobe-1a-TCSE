@@ -1,6 +1,3 @@
-"""
-features.py – prune noisy spans & build numeric feature matrix
-"""
 from __future__ import annotations
 import re
 from typing import List
@@ -62,14 +59,12 @@ def filter_spans(spans: List[Span], title: str, page_cnt: int) -> List[Span]:
                 kept.append(s)
             continue
 
-        # --- single‑page flyers: keep loud banners, drop form labels ---
         if page_cnt == 1:
             if txt.strip().endswith(":"):
                 continue
             if ALLCAPS_RE.fullmatch(txt.strip()) or txt.strip().endswith("!"):
                 kept.append(s); continue
 
-        # General body‑text guards (reduce false H3s)
         tokens = txt.split()
         if _starts_lower(txt) and len(tokens) >= 6:
             continue

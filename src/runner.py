@@ -1,6 +1,3 @@
-"""
-runner.py – main CLI (invite‑flyer override + robust cover‑title detection)
-"""
 from __future__ import annotations
 import json, pathlib, re
 from typing import List
@@ -19,17 +16,15 @@ SCHEMA = (
     / "sample_dataset/schema/output_schema.json"
 )
 
-# ---------- helpers ------------------------------------------------------- #
+
 CHAR_STUT   = re.compile(r"(\w)\s+\1\w?")
 WORD_DUP    = re.compile(r"\b(\w{2,})(\s+\1\b)+", re.I)
 WS_COLLAPSE = re.compile(r"\s{2,}")
-NUM_FIELD   = re.compile(r"\b\d+\.")                 # “… 1.” pattern
+NUM_FIELD   = re.compile(r"\b\d+\.")         
 
-# Make the default “cover band” a little deeper for tall covers
-TOP_Y_LIMIT = 520
+TOP_Y_LIMIT = 420        
 PAGE_HEIGHT = 792.0
 
-# Tokens that strongly indicate a table/form row (avoid in subtitles)
 _FORM_TOKENS = {
     "name","designation","date","service","pay","si","npa","hometown","home","town",
     "wife","husband","whether","entitled","block","place","amount","rs","s.no","sno",
@@ -65,24 +60,19 @@ def _is_titlecase_like(s: str) -> bool:
     words = [w for w in re.split(r"\s+", txt) if w]
     if not words:
         return False
-    # ALL‑CAPS?
-    alpha = [c for c in txt if c.isalpha()]
-    if alpha:
-        caps_ratio = sum(c.isupper() for c in alpha) / len(alpha)
-        if caps_ratio >= 0.85:
-            return True
-    # Title‑Case: majority of tokens start uppercase (ignore punctuation)
+
+    caps_ratio = sum(c.isupper() for c in txt if c.isalpha()) / max(1, sum(c.isalpha() for c in txt))
+    if caps_ratio >= 0.85:
+        return True
     starts_upper = 0
     for w in words:
-        for ch in w:
-            if ch.isalpha():
-                if ch.isupper():
-                    starts_upper += 1
-                break
+        c = next((ch for ch in w if ch.isalpha()), "")
+        if c and c.isupper():
+            starts_upper += 1
     return (starts_upper / len(words)) >= 0.60
 
 def _looks_like_form_line(s: str) -> bool:
-    """Reject common form/table cells as potential subtitles."""
+
     low = s.lower()
     if low.endswith(":"):
         return True
@@ -92,37 +82,23 @@ def _looks_like_form_line(s: str) -> bool:
         return True
     return False
 
-def _collect_cover_band(spans: List[Span], y_limit: float) -> List[Span]:
-    """Spans on p1 within the top-of-page band; fallback to whole p1 if empty."""
-    band = [s for s in spans if s.page == 1 and s.bbox[1] < y_limit]
-    if band:
-        return sorted(band, key=lambda x: x.bbox[1])
-    # Fallback: whole first page, still sorted by Y (for tall covers like the RFP)
-    whole = [s for s in spans if s.page == 1]
-    return sorted(whole, key=lambda x: x.bbox[1])
-
 def detect_title(spans: List[Span]) -> str:
-    """
-    Cover title extraction:
-      • take max‑font line(s) near top (or whole page if the band is empty),
-      • consider a 240pt subtitle band below the first title line,
-      • only accept subtitles that look like headings, not form/table rows.
-    """
-    p1 = _collect_cover_band(spans, TOP_Y_LIMIT)
+
+    p1 = [s for s in spans if s.page == 1 and s.bbox[1] < TOP_Y_LIMIT]
     if not p1:
         return ""
 
+    p1.sort(key=lambda s: s.bbox[1])
     max_sz = max(s.font_size for s in p1)
+
     title_raw: List[str] = []
 
-    # (1) absolute max‑size line(s) (e.g., “RFP: Request for Proposal”)
     for s in p1:
         if abs(s.font_size - max_sz) < 0.5:
             title_raw.append(_scrub_line(s.text))
         else:
             break
 
-    # (2) subtitle within band
     base_y   = p1[0].bbox[1]
     GAP_MAX  = 240
     added    = 0
@@ -149,7 +125,6 @@ def detect_title(spans: List[Span]) -> str:
         clean = " ".join(title_raw).strip()
     return clean
 
-# -------- single‑page flyer helpers -------------------------------------- #
 def _fallback_title(spans: List[Span]) -> str:
     return _scrub_line(max(spans, key=lambda s: s.font_size).text) if spans else ""
 
@@ -175,8 +150,7 @@ def _pick_bottom_callout_heading(spans: List[Span]) -> Span | None:
             continue
         y_mid = (s.bbox[1] + s.bbox[3]) / 2.0
         words = len(s.text.split())
-        alpha = [c for c in s.text if c.isalpha()]
-        caps_ratio = (sum(c.isupper() for c in alpha) / len(alpha)) if alpha else 0.0
+        caps_ratio = sum(c.isupper() for c in s.text) / max(1, len(s.text))
         txt = s.text.strip()
         if y_mid / PAGE_HEIGHT < 0.60:
             continue
@@ -190,14 +164,12 @@ def _pick_bottom_callout_heading(spans: List[Span]) -> Span | None:
     best.level = "H1"
     return best
 
-# ------------------------------------------------------------------------ #
 def process(pdf: pathlib.Path, out_dir: pathlib.Path):
     spans        = extract_spans(pdf)
     page_cnt     = max(s.page for s in spans)
 
     title        = detect_title(spans)
 
-    # Invitation flyer override
     invite = (page_cnt == 1) and _is_invite_form(spans)
     if invite:
         title = ""
@@ -220,7 +192,7 @@ def process(pdf: pathlib.Path, out_dir: pathlib.Path):
     out_dir.mkdir(parents=True, exist_ok=True)
     out_path = out_dir / f"{pdf.stem}.json"
     out_path.write_bytes(orjson.dumps(data, option=orjson.OPT_INDENT_2))
-    print(f"✅  {pdf.name} → {out_path.relative_to(out_dir.parent)}")
+    print(f"{pdf.name} → {out_path.relative_to(out_dir.parent)}")
 
 def main():
     docker = "/app/" in str(pathlib.Path(__file__).resolve())

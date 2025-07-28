@@ -1,6 +1,3 @@
-"""
-extract.py – OCR fallback + robust span merging (line-level OCR)
-"""
 from __future__ import annotations
 import pathlib, re, fitz
 from dataclasses import dataclass
@@ -11,10 +8,10 @@ from langdetect import detect, DetectorFactory
 
 DetectorFactory.seed = 0
 
-SECTION_NUM_RE = re.compile(r"^\d+(\.\d+)+\s?$")   # "2.1" / "2.1 "
-NUM_HDR_RE     = re.compile(r"^\d+(\.\d+)+\s")      # "2.1 "
+SECTION_NUM_RE = re.compile(r"^\d+(\.\d+)+\s?$")   
+NUM_HDR_RE     = re.compile(r"^\d+(\.\d+)+\s")    
 
-# ------------------------------------------------------------------ #
+
 @dataclass
 class Span:
     text: str
@@ -28,7 +25,6 @@ class Span:
     level: str | None = None
 
 
-# ---------- helpers ------------------------------------------------ #
 def _guess_lang(t: str) -> str:
     try:
         return detect(t)
@@ -37,9 +33,6 @@ def _guess_lang(t: str) -> str:
 
 
 def _ocr_page_lines(pix: fitz.Pixmap, langs: str = "eng+jpn+hin") -> List[Span]:
-    """
-    Return line-level spans from Tesseract with approximate font_size ~= line height.
-    """
     from pytesseract import Output
     img = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
     data = pytesseract.image_to_data(img, lang=langs, output_type=Output.DICT)
@@ -92,7 +85,7 @@ def _ocr_page_lines(pix: fitz.Pixmap, langs: str = "eng+jpn+hin") -> List[Span]:
     return spans
 
 
-# ---------- merge logic -------------------------------------------- #
+
 def _merge_line_spans(raw: List[Span]) -> List[Span]:
     if not raw:
         return []
@@ -132,7 +125,6 @@ def _merge_line_spans(raw: List[Span]) -> List[Span]:
     return merged
 
 
-# ---------- public API --------------------------------------------- #
 def extract_spans(pdf_path: pathlib.Path, dpi: int = 150) -> List[Span]:
     doc = fitz.open(pdf_path)
     spans: List[Span] = []
@@ -140,7 +132,7 @@ def extract_spans(pdf_path: pathlib.Path, dpi: int = 150) -> List[Span]:
         page = doc.load_page(i)
         d = page.get_text("dict")
 
-        if not any(b["type"] == 0 for b in d["blocks"]):  # scanned → OCR
+        if not any(b["type"] == 0 for b in d["blocks"]):  
             for sp in _ocr_page_lines(page.get_pixmap(dpi=dpi)):
                 sp.page = i + 1
                 spans.append(sp)

@@ -1,7 +1,3 @@
-"""
-json_io.py – dump pretty JSON and validate against schema
-"""
-
 import json, pathlib, orjson
 from jsonschema import validate
 
@@ -11,5 +7,5 @@ _SCHEMA = json.loads(_SCHEMAPATH.read_text())
 
 
 def write_json(data: dict, out_path: pathlib.Path):
-    validate(instance=data, schema=_SCHEMA)      # raises if invalid
+    validate(instance=data, schema=_SCHEMA)      
     out_path.write_bytes(orjson.dumps(data, option=orjson.OPT_INDENT_2))
